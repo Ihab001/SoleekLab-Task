@@ -1,0 +1,44 @@
+body{
+
+    margin-top: 2%;
+    margin-bottom: 2%;
+    margin-left:2%;
+    margin-right: 2%;
+
+    
+}
+.modal-backdrop {
+    /* bug fix - no overlay */    
+    display: none;    
+}
+.tableImage{
+    width:7%;
+    height: 8%;
+  position: absolute;
+  border-radius: 50%;
+  background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+ 
+    margin-top:-0.6%;
+  
+    
+    
+}
+
+[type="date"] {
+    background:#fff url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png)  97% 50% no-repeat ;
+  }
+  [type="date"]::-webkit-inner-spin-button {
+    display: none;
+  }
+  [type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0;
+  }
+  
+  /* custom styles */
+
+  label {
+    display: block;
+  }
+ 

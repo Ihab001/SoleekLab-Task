@@ -1,0 +1,257 @@
+<body>
+
+
+
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add">
+   Add New product
+  </button>
+
+    <!-- start of add new product modal -->
+  
+  <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="addLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addLabel">Product Information</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form #form="ngForm" (ngSubmit)=addProduct(form.value) >
+                <div class="row">
+                  <div class="col">
+                   
+                 <input #sku="ngModel" ngModel name="sku" id="sku" type="text" class="form-control" placeholder="SKU" required>
+                  <div class="alert alert-danger" *ngIf="sku.touched && sku.invalid">
+                     SKU is required
+                  </div>
+                </div>
+                </div>
+                <br>
+                <div class="row">
+                  <div class="col">
+                    <input #name="ngModel" ngModel name="name" id="name" type="text" class="form-control" placeholder="Name" required>
+                    <div class="alert alert-danger" *ngIf="name.touched && name.invalid">
+                        name is required
+                     </div>
+                  </div>
+                  </div>
+                  <br>
+                  <div class="row">
+                  <div class="col">
+                      <input #image="ngModel" ngModel name="image" id="imagelink" type="text" class="form-control" placeholder="ImageLink" required>
+                      <div class="alert alert-danger" *ngIf="image.touched && image.invalid">
+                          imageLink is required
+                       </div>
+                    </div>
+                    </div>
+                
+                <br>
+                <div class="row">
+                    <div class="col">
+                      <input #cat="ngModel" ngModel name="category" id="category" type="text" class="form-control" placeholder="Category" required>
+                      <div class="alert alert-danger" *ngIf="cat.touched && cat.invalid">
+                          category is required
+                       </div>
+                    </div>
+                    </div>
+                   <br>
+                    <div class="row">
+                    <div class="col">
+                      <input #price="ngModel" ngModel name="price" id="price" type="text" class="form-control" placeholder="Price" required>
+                      <div class="alert alert-danger" *ngIf="price.touched && price.invalid">
+                          price is required
+                       </div>
+                    </div>
+                  </div>
+                  <br>
+                  <div class="row">
+                    <div class="col">
+                       
+                        <input type="date"  #date="ngModel" ngModel name="Date" id="date" class="form-control"  placeholder="Date" required>
+                        <div class="alert alert-danger" *ngIf="date.touched && date.invalid">
+                            date is required
+                         </div>
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Discard</button>
+                      <button  class="btn btn-primary" [disabled]="!form.valid">Add</button>
+                    </div>
+              </form>
+        </div>
+       
+      </div>
+    </div>
+  </div>
+
+ <!-- end of add new product modal -->
+
+ <!-- table of products-->
+  <table class="table table-striped table-dark">
+    <thead>
+      <tr >
+        <th scope="col">SKU</th>
+        <th scope="col">Name</th>
+        <th scope="col">Image</th>
+        <th scope="col">Category</th>
+        <th scope="col">Price</th>
+        <th scope="col">Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let x of productData | async">
+        <th scope="row">{{x.sku}}</th>
+        <td> {{x.name}} </td>
+        <td><img class="tableImage" [src]='x.image'></td>
+        <td>{{x.category}}</td>
+        <td>{{x.price}}</td>
+        <td>{{x.Date}}</td>
+        <td>
+            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#edit" (click)="RowSelected(x)" >
+                Edit
+               </button>
+               <button type="button" class="btn btn-info" data-toggle="modal" data-target="#view" (click)="RowSelected(x)" >
+                  View
+                   </button>
+               <button type="button" class="btn btn-danger"  (click)="delete(x.key)">
+                Remove
+                 </button>
+   
+        </td>
+
+
+
+
+        <!--start of Edit product Modal-->
+        <div style="color:black" class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="#editLabel" aria-hidden="true">
+           
+          <!--start of form inside modal-->
+          
+             <form #formEdit="ngForm" (ngSubmit)=editProduct(formEdit.value,selectedUser.key) >
+          <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="editLabel">Edit Product</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+               
+                <div class="modal-body">
+                 
+                        <div class="row">
+                          <div class="col">
+                         <label>SKU</label>
+                         <input  type="text" name="sku" class="form-control" [(ngModel)]="selectedUser.sku" placeholder="SKU"  required>
+                      
+                        </div>
+                        </div>
+                        <br>
+                        
+                        <div class="row">
+                          <div class="col">
+                              <label>Name</label>
+                            <input #name="ngModel" [(ngModel)]="selectedUser.name" name="name" id="name" type="text" class="form-control" placeholder="Name" required>
+                          
+                          </div>
+                          </div>
+                          <br>
+                          <div class="row">
+                          <div class="col">
+                              <label>Image Link</label>
+                              <input #image="ngModel" [(ngModel)]="selectedUser.image" name="image" id="imagelink" type="text" class="form-control"  placeholder="ImageLink" required>
+                             
+                            </div>
+                            </div>
+                        
+                        <br>
+                        <div class="row">
+                            <div class="col">
+                                <label>Category</label>
+                              <input #cat="ngModel"  [(ngModel)]="selectedUser.category" name="category" id="category" type="text" class="form-control" placeholder="Category" required>
+                              
+                            </div>
+                            </div>
+                           <br>
+                            <div class="row">
+                            <div class="col">
+                                <label>Price</label>
+                              <input #price="ngModel" [(ngModel)]="selectedUser.price" name="price" id="price" type="text" class="form-control" placeholder="Price" required>
+                             
+                            </div>
+                          </div>
+                          <br>
+                          <div class="row">
+                            <div class="col">
+                                <label>Date</label>
+                                <input #date="ngModel" [(ngModel)]="selectedUser.Date" ngModel name="Date" id="date" type="date" class="form-control"  placeholder="Date" required>
+                               
+                              </div>
+                          </div>
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Discard</button>
+                              <button type="submit"  class="btn btn-primary" [disabled]="!formEdit.valid" data-backdrop="false">Save</button>
+                            </div>
+                  
+                </div>
+              
+              </div>
+            </div>
+          </form>
+             <!--end of form inside modal-->
+          </div>
+         <!--end of edit modal-->
+      </tr>
+   
+
+    </tbody>
+  </table>
+
+  <!--start of view product modal-->
+  <div class="modal fade" id="view" tabindex="-1" role="dialog" aria-labelledby="viewLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="viewLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+              <div class="col-6">
+            <div class="card" style="width: 15rem;">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item" >SKU :{{selectedUser.sku}}</li>
+                  <li class="list-group-item">Name : {{selectedUser.name}}</li>
+                  <li class="list-group-item">Category : {{selectedUser.category}}</li>
+                  <li class="list-group-item">Date : {{selectedUser.Date}}</li>
+                  <li class="list-group-item" style="color:green"> {{selectedUser.price}}</li>
+                </ul>
+              </div>
+            </div >
+            <div class="col-6">
+                <img class="card-img-top" [src]="selectedUser.image" alt="Product Image not available">
+            </div>
+          </div >
+            
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--end of view product modal -->
+</body>
+
+
+
+
+
+
+
+
+
