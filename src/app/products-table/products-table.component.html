@@ -109,10 +109,10 @@
         <td>{{x.price}}</td>
         <td>{{x.Date}}</td>
         <td>
-            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#edit" (click)="RowSelected(x)" >
+            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#edit" (click)="productSelected(x)" >
                 Edit
                </button>
-               <button type="button" class="btn btn-info" data-toggle="modal" data-target="#view" (click)="RowSelected(x)" >
+               <button type="button" class="btn btn-info" data-toggle="modal" data-target="#view" (click)="productSelected(x)" >
                   View
                    </button>
                <button type="button" class="btn btn-danger"  (click)="delete(x.key)">
@@ -129,7 +129,7 @@
            
           <!--start of form inside modal-->
           
-             <form #formEdit="ngForm" (ngSubmit)=editProduct(formEdit.value,selectedUser.key) >
+             <form #formEdit="ngForm" (ngSubmit)=editProduct(formEdit.value,selectedProduct.key) >
           <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
@@ -144,7 +144,7 @@
                         <div class="row">
                           <div class="col">
                          <label>SKU</label>
-                         <input  type="text" name="sku" class="form-control" [(ngModel)]="selectedUser.sku" placeholder="SKU"  required>
+                         <input  type="text" name="sku" class="form-control" [(ngModel)]="selectedProduct.sku" placeholder="SKU"  required>
                       
                         </div>
                         </div>
@@ -153,7 +153,7 @@
                         <div class="row">
                           <div class="col">
                               <label>Name</label>
-                            <input #name="ngModel" [(ngModel)]="selectedUser.name" name="name" id="name" type="text" class="form-control" placeholder="Name" required>
+                            <input #name="ngModel" [(ngModel)]="selectedProduct.name" name="name" id="name" type="text" class="form-control" placeholder="Name" required>
                           
                           </div>
                           </div>
@@ -161,7 +161,7 @@
                           <div class="row">
                           <div class="col">
                               <label>Image Link</label>
-                              <input #image="ngModel" [(ngModel)]="selectedUser.image" name="image" id="imagelink" type="text" class="form-control"  placeholder="ImageLink" required>
+                              <input #image="ngModel" [(ngModel)]="selectedProduct.image" name="image" id="imagelink" type="text" class="form-control"  placeholder="ImageLink" required>
                              
                             </div>
                             </div>
@@ -170,7 +170,7 @@
                         <div class="row">
                             <div class="col">
                                 <label>Category</label>
-                              <input #cat="ngModel"  [(ngModel)]="selectedUser.category" name="category" id="category" type="text" class="form-control" placeholder="Category" required>
+                              <input #cat="ngModel"  [(ngModel)]="selectedProduct.category" name="category" id="category" type="text" class="form-control" placeholder="Category" required>
                               
                             </div>
                             </div>
@@ -178,7 +178,7 @@
                             <div class="row">
                             <div class="col">
                                 <label>Price</label>
-                              <input #price="ngModel" [(ngModel)]="selectedUser.price" name="price" id="price" type="text" class="form-control" placeholder="Price" required>
+                              <input #price="ngModel" [(ngModel)]="selectedProduct.price" name="price" id="price" type="text" class="form-control" placeholder="Price" required>
                              
                             </div>
                           </div>
@@ -186,7 +186,7 @@
                           <div class="row">
                             <div class="col">
                                 <label>Date</label>
-                                <input #date="ngModel" [(ngModel)]="selectedUser.Date" ngModel name="Date" id="date" type="date" class="form-control"  placeholder="Date" required>
+                                <input #date="ngModel" [(ngModel)]="selectedProduct.Date" ngModel name="Date" id="date" type="date" class="form-control"  placeholder="Date" required>
                                
                               </div>
                           </div>
@@ -224,16 +224,16 @@
               <div class="col-6">
             <div class="card" style="width: 15rem;">
                 <ul class="list-group list-group-flush">
-                  <li class="list-group-item" >SKU :{{selectedUser.sku}}</li>
-                  <li class="list-group-item">Name : {{selectedUser.name}}</li>
-                  <li class="list-group-item">Category : {{selectedUser.category}}</li>
-                  <li class="list-group-item">Date : {{selectedUser.Date}}</li>
-                  <li class="list-group-item" style="color:green"> {{selectedUser.price}}</li>
+                  <li class="list-group-item" >SKU :{{selectedProduct.sku}}</li>
+                  <li class="list-group-item">Name : {{selectedProduct.name}}</li>
+                  <li class="list-group-item">Category : {{selectedProduct.category}}</li>
+                  <li class="list-group-item">Date : {{selectedProduct.Date}}</li>
+                  <li class="list-group-item" style="color:green"> {{selectedProduct.price}}</li>
                 </ul>
               </div>
             </div >
             <div class="col-6">
-                <img class="card-img-top" [src]="selectedUser.image" alt="Product Image not available">
+                <img class="card-img-top" [src]="selectedProduct.image" alt="Product Image not available">
             </div>
           </div >
             
